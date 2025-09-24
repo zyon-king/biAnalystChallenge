@@ -1,5 +1,8 @@
 # biAnalystChallenge
-Realizar o desafio baseada nas melhores práticas usadas pela área de BI &amp; MIS, criando os processos de maneira que fiquei funcional como se fosse rodar todos os dias. Após isso, criar o Dashboard como se fosse uma entrega real para o cliente, não se limitando apenas as visões solicitadas no desafio.
+* Realizar o desafio baseado nas melhores práticas usadas pela área de BI &amp; MIS;
+* Criando os processos de maneira que fique funcional como se fosse rodar todos os dias;
+* Após isso, criar o Dashboard como se fosse uma entrega real para o cliente;
+* Não se limitando apenas as visões solicitadas no desafio.
 
 # Desafio Analista de BI e MIS
 
