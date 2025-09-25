@@ -102,8 +102,11 @@ Instalar o SQL Server ou usar o Azure Data Studio (mais leve).
 Suba o arquivo **BaseCasos.csv** para o SQL Server. A tabela deve ser nomeada como **[histCasosTrabalhados]**.
 
 **Execução:**
+Abrir o BaseCasos.csv no Excel para ver os nomes das colunas e entender a estrutura do arquivo.
 
 Marcar a caixa na coluna "Permitir Nulos" para todas as linhas (exceto chave primária, Id_Caso), como Status, Canal_Entrada, Resolução, etc. Isso tornará a carga de dados muito mais resistente a falhas por dados em branco.
+
+Após importar o arquivo para a tabela histCasosTrabalhados no SQL Server, use SELECT TOP 10 * FROM histCasosTrabalhados; para verificar o resultado.
 
 Após essa etapa, a prática correta será carregar os dados brutos de forma flexível em uma tabela de "stage" ou área de trabalho (como a histCasosTrabalhados) e só depois aplicar as regras de negócio e a limpeza.
 
@@ -112,11 +115,6 @@ Após essa etapa, a prática correta será carregar os dados brutos de forma fle
 Crie as seguintes tabelas dimensões no SQL Server, com base na tabela **[histCasosTrabalhados]**:
 
 **[dimCalendario]**: com base na coluna **[Data_Hora_Criação]**.
-Uma tabela de feriados separada (dimFeriados) necessitaria de um JOIN extra na tabela de calendário e, finalmente, outro JOIN na tabela de fatos.  Seria criada em cenários mais complexos e específicos, como feriados mutáveis por localização.
-
-O script completo para a dimCalendario será executado  apenas uma vez para criar a tabela, as procedures e populá-la com o intervalo de tempo necessáro.
-
-O agendamento da execução do script sp_AtualizaDadosBI roda diariamente, inserindo novos valores nas outras dimensões (dimFuncionario, dimSupervisor, etc.). Além disso, limpa e recarrega a tabela de fatos (fatoCasos) com todos os dados da histCasosTrabalhados, realizando os JOINs para associar os IDs das dimensões.
 
 **[dimFuncionario]**: com base na coluna **[NomeAgen]**.
 
@@ -129,6 +127,18 @@ O agendamento da execução do script sp_AtualizaDadosBI roda diariamente, inser
 **[dimCanalEntrada]**: com base na coluna **[Canal_Entrada]**.
 
 **[dimPais]**: com base na coluna **[País]**.
+
+**Execução:**
+
+Uma tabela de feriados separada (dimFeriados) necessitaria de um JOIN extra na tabela de calendário e, finalmente, outro JOIN na tabela de fatos.  Seria criada em cenários mais complexos e específicos, como feriados mutáveis por localização.
+
+O script completo para a dimCalendario será executado  apenas uma vez para criar a tabela, as procedures e populá-la com o intervalo de tempo necessáro.
+
+O agendamento da execução do script sp_AtualizaDadosBI roda diariamente, inserindo novos valores nas outras dimensões (dimFuncionario, dimSupervisor, etc.). Além disso, limpa e recarrega a tabela de fatos (fatoCasos) com todos os dados da histCasosTrabalhados, realizando os JOINs para associar os IDs das dimensões.
+
+Implementar colunas de auditoria (DataCriacao, DataAtualizacao).
+
+Incluir um membro "Não Informado" com ID -1, o que é uma boa prática de modelagem para lidar com valores nulos.
 
 ### 3. Criar tabela fato
 Crie uma tabela fato no SQL Server, também com base na tabela **[histCasosTrabalhados]**. Ela deve conter as chaves estrangeiras das dimensões criadas e os campos necessários para calcular os seguintes indicadores:
