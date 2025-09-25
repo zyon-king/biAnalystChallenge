@@ -94,6 +94,13 @@ Instalar o SQL Server ou usar o Azure Data Studio (mais leve).
 ### 1. Subir a base de dados para o SQL Server
 Suba o arquivo **BaseCasos.csv** para o SQL Server. A tabela deve ser nomeada como **[histCasosTrabalhados]**.
 
+**Execução:**
+
+Marcar a caixa na coluna "Permitir Nulos" para todas as linhas (exceto chave primária, Id_Caso), como Status, Canal_Entrada, Resolução, etc. Isso tornará a carga de dados muito mais resistente a falhas por dados em branco.
+
+Após essa etapa, a prática correta será carregar os dados brutos de forma flexível em uma tabela de "stage" ou área de trabalho (como a histCasosTrabalhados) e só depois aplicar as regras de negócio e a limpeza.
+
+
 ### 2. Criar tabelas dimensões
 Crie as seguintes tabelas dimensões no SQL Server, com base na tabela **[histCasosTrabalhados]**:
 
