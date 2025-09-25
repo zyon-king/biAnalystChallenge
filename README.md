@@ -104,13 +104,24 @@ Após essa etapa, a prática correta será carregar os dados brutos de forma fle
 ### 2. Criar tabelas dimensões
 Crie as seguintes tabelas dimensões no SQL Server, com base na tabela **[histCasosTrabalhados]**:
 
-* **[dimCalendario]**: com base na coluna **[Data_Hora_Criação]**.
-* **[dimFuncionario]**: com base na coluna **[NomeAgen]**.
-* **[dimSupervisor]**: com base na coluna **[NomeSupe]**.
-* **[dimMotiChamador]**: com base na coluna **[Motivo_Chamador]**.
-* **[dimStatus]**: com base na coluna **[Status]**.
-* **[dimCanalEntrada]**: com base na coluna **[Canal_Entrada]**.
-* **[dimPais]**: com base na coluna **[País]**.
+**[dimCalendario]**: com base na coluna **[Data_Hora_Criação]**.
+Uma tabela de feriados separada (dimFeriados) necessitaria de um JOIN extra na tabela de calendário e, finalmente, outro JOIN na tabela de fatos.  Seria criada em cenários mais complexos e específicos, como feriados mutáveis por localização.
+
+O script completo para a dimCalendario será executado  apenas uma vez para criar a tabela, as procedures e populá-la com o intervalo de tempo necessáro.
+
+O agendamento da execução do script sp_AtualizaDadosBI roda diariamente, inserindo novos valores nas outras dimensões (dimFuncionario, dimSupervisor, etc.). Além disso, limpa e recarrega a tabela de fatos (fatoCasos) com todos os dados da histCasosTrabalhados, realizando os JOINs para associar os IDs das dimensões.
+
+**[dimFuncionario]**: com base na coluna **[NomeAgen]**.
+
+**[dimSupervisor]**: com base na coluna **[NomeSupe]**.
+
+**[dimMotiChamador]**: com base na coluna **[Motivo_Chamador]**.
+
+**[dimStatus]**: com base na coluna **[Status]**.
+
+**[dimCanalEntrada]**: com base na coluna **[Canal_Entrada]**.
+
+**[dimPais]**: com base na coluna **[País]**.
 
 ### 3. Criar tabela fato
 Crie uma tabela fato no SQL Server, também com base na tabela **[histCasosTrabalhados]**. Ela deve conter as chaves estrangeiras das dimensões criadas e os campos necessários para calcular os seguintes indicadores:
