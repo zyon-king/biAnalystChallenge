@@ -1,4 +1,11 @@
 # biAnalystChallenge
+--
+
+## Entrevista
+- Falar que fiz muita pesquisa na faculade.
+- 
+
+--
 * Realizar o desafio baseado nas melhores práticas usadas pela área de BI &amp; MIS;
 * criando os processos de maneira que fique funcional como se fosse rodar todos os dias;
 * após isso, criar o Dashboard como se fosse uma entrega real para o cliente;
