@@ -89,6 +89,7 @@ Instalar o SQL Server ou usar o Azure Data Studio (mais leve).
 - Publicar o dashboard (se for pedido)
 
 ---
+## O Desafio  
 
 ### 1. Subir a base de dados para o SQL Server
 Suba o arquivo **BaseCasos.csv** para o SQL Server. A tabela deve ser nomeada como **[histCasosTrabalhados]**.
