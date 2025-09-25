@@ -90,4 +90,33 @@ Instalar o SQL Server ou usar o Azure Data Studio (mais leve).
 
 ---
 
+### 1. Subir a base de dados para o SQL Server
+Suba o arquivo **BaseCasos.csv** para o SQL Server. A tabela deve ser nomeada como **[histCasosTrabalhados]**.
 
+### 2. Criar tabelas dimensões
+Crie as seguintes tabelas dimensões no SQL Server, com base na tabela **[histCasosTrabalhados]**:
+
+* **[dimCalendario]**: com base na coluna **[Data_Hora_Criação]**.
+* **[dimFuncionario]**: com base na coluna **[NomeAgen]**.
+* **[dimSupervisor]**: com base na coluna **[NomeSupe]**.
+* **[dimMotiChamador]**: com base na coluna **[Motivo_Chamador]**.
+* **[dimStatus]**: com base na coluna **[Status]**.
+* **[dimCanalEntrada]**: com base na coluna **[Canal_Entrada]**.
+* **[dimPais]**: com base na coluna **[País]**.
+
+### 3. Criar tabela fato
+Crie uma tabela fato no SQL Server, também com base na tabela **[histCasosTrabalhados]**. Ela deve conter as chaves estrangeiras das dimensões criadas e os campos necessários para calcular os seguintes indicadores:
+
+* **%Resolução**: (soma do total de “Yes” dividido pela soma do total de “Yes” mais “No”).
+* **Total de casos fechados**: (com status “Done”).
+* **Total de Casos abertos**.
+* **Tempo médio para atualização em Horas**.
+* **Tempo médio para fechamento em Horas**.
+
+A tabela fato deve ser sumarizada por período (Dia ou intervalo), não sendo necessário incluir o ID do caso.
+
+### 4. Criar uma procedure de atualização
+Crie uma stored procedure que atualize automaticamente as tabelas de dimensão e a tabela fato.
+
+### 5. Criar um dashboard no Power BI
+Desenvolva um dashboard no Power BI que visualize os indicadores definidos no item 3.
